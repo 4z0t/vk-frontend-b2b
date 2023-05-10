@@ -1,10 +1,17 @@
 import LocalizedStrings, { LocalizedStringsMethods } from "react-localization";
 
+interface SelectStrings {
+  towerPlaceholder: string;
+  floorPlaceholder: string;
+  roomPlaceholder: string;
+}
+
 interface FormStrings {
   formTitle: string;
   sendText: String;
   clearText: String;
   commentPlaceholder: string;
+  select: SelectStrings;
 }
 
 interface AppStrings extends LocalizedStringsMethods {
@@ -17,7 +24,12 @@ const strings: AppStrings = new LocalizedStrings({
       formTitle: "Meeting room booking",
       sendText: "Send",
       clearText: "Clear",
-      commentPlaceholder:"leave your comment here..."
+      commentPlaceholder: "leave your comment here...",
+      select: {
+        towerPlaceholder: "Select tower",
+        floorPlaceholder: "Select floor",
+        roomPlaceholder: "Select room",
+      },
     },
   },
   ru: {
@@ -25,7 +37,12 @@ const strings: AppStrings = new LocalizedStrings({
       formTitle: "Бронирование переговорной",
       sendText: "Отправить",
       clearText: "Очистить",
-      commentPlaceholder:"оставьте свой комментарий здесь..."
+      commentPlaceholder: "оставьте свой комментарий здесь...",
+      select: {
+        towerPlaceholder: "Выберите башню",
+        floorPlaceholder: "Выберите этаж",
+        roomPlaceholder: "Выберите переговорку",
+      },
     },
   },
 });

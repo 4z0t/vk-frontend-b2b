@@ -51,7 +51,7 @@ function SendButton(props: React.HTMLProps<HTMLDivElement>) {
   );
 }
 
-export default function Form({ onSend }: { onSend: (data: FormData) => void }) {
+function Form({ onSend }: { onSend: (data: FormData) => void }) {
   const [option, setOption] = useState<SingleValue<Option>>(null);
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [comment, setComment] = useState<string>("");
@@ -61,6 +61,7 @@ export default function Form({ onSend }: { onSend: (data: FormData) => void }) {
     <form className="Form">
       <p>{localization.form.formTitle}</p>
       <Select
+        placeholder={localization.form.select.towerPlaceholder}
         value={option}
         defaultValue={option}
         onChange={setOption}
@@ -111,3 +112,5 @@ export default function Form({ onSend }: { onSend: (data: FormData) => void }) {
     </form>
   );
 }
+
+export default Form;

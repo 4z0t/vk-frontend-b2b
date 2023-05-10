@@ -18,6 +18,11 @@
     padding: 0;
 }
 
+.Form-textarea {
+    font-size: 20px;
+    resize: vertical;
+}
+
 .Buttons-panel {
     display: flex;
     flex-direction: row;

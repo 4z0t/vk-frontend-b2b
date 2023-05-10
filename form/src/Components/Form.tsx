@@ -38,7 +38,7 @@ const rooms: Options<Option<number>> = range(1, 10).map((v) => {
 
 function TextArea(props: React.HTMLProps<HTMLTextAreaElement>) {
   return (
-    <textarea
+    <textarea className="Form-textarea"
       placeholder={localization.form.commentPlaceholder}
       {...props}
     ></textarea>
@@ -106,7 +106,7 @@ function Form({ onSend }: { onSend: (data: FormData) => void }) {
         value={timeRange}
         onChange={setTimeRange}
       ></TimeRangePicker>
-      <TextArea
+      <TextArea        
         value={comment}
         onChange={(e) => setComment(e.currentTarget.value)}
       />

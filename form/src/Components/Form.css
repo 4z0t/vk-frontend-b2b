@@ -1,0 +1,19 @@
+.Form {
+    width: auto;
+    height: auto;
+    background-color: #25A18E;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-radius: 5px;
+    padding: 30px;
+    row-gap: 20px;
+    column-gap: 20px;
+}
+
+.Form p {
+    color: aliceblue;
+    font-size: 30px;
+    padding: 0;
+}

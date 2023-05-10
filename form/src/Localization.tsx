@@ -12,6 +12,7 @@ interface FormStrings {
   clearText: String;
   commentPlaceholder: string;
   select: SelectStrings;
+  dateText: string;
 }
 
 interface AppStrings extends LocalizedStringsMethods {
@@ -30,6 +31,7 @@ const strings: AppStrings = new LocalizedStrings({
         floorPlaceholder: "Select floor",
         roomPlaceholder: "Select room",
       },
+      dateText: "Meeting date"
     },
   },
   ru: {
@@ -43,6 +45,7 @@ const strings: AppStrings = new LocalizedStrings({
         floorPlaceholder: "Выберите этаж",
         roomPlaceholder: "Выберите переговорку",
       },
+      dateText: "Дата встречи"
     },
   },
 });

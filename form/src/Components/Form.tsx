@@ -1,13 +1,14 @@
 import React, { useState, useRef } from "react";
 import Select, { SingleValue, Options } from "react-select";
-import "./Form.css";
 
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
 import { LooseValue } from "@wojtekmaj/react-timerange-picker/dist/cjs/shared/types";
 
 import localization from "../Localization";
+
+import "react-datepicker/dist/react-datepicker.css";
+import "./Form.css";
 interface Option<T = string> {
   value?: T;
   label?: string;
@@ -63,6 +64,26 @@ function SendButton(props: React.HTMLProps<HTMLDivElement>) {
   );
 }
 
+function FormDate({
+  date,
+  onChange,
+}: {
+  date: Date | null;
+  onChange: (date: Date) => void;
+}) {
+  return (
+    <div className="Form-date">
+      <p>{localization.form.dateText}</p>
+      <DatePicker
+        dateFormat="hh:mm dd.MM.yyyy"
+        selected={date}
+        showTimeSelect
+        onChange={onChange}
+      ></DatePicker>
+    </div>
+  );
+}
+
 function Form({ onSend }: { onSend: (data: FormData) => void }) {
   const [tower, setTower] = useState<SingleValue<Option>>(null);
   const [floor, setFloor] = useState<SingleValue<Option<number>>>(null);
@@ -95,19 +116,15 @@ function Form({ onSend }: { onSend: (data: FormData) => void }) {
         onChange={setRoom}
         options={rooms}
       ></Select>
-      <div>
-        <DatePicker
-          dateFormat="dd.MM.yyyy"
-          selected={startDate}
-          onChange={(date) => {
-            date && setStartDate(date);
-          }}
-        ></DatePicker>
-      </div>
-      <TimeRangePicker
+      <FormDate
+        date={startDate}
+        onChange={(date) => date && setStartDate(date)}
+      />
+      {/* Кривой
+       <TimeRangePicker
         value={timeRange}
         onChange={setTimeRange}
-      ></TimeRangePicker>
+      ></TimeRangePicker> */}
       <TextArea
         value={comment}
         onChange={(e) => setComment(e.currentTarget.value)}

@@ -14,6 +14,7 @@
 
 .Form p {
     color: aliceblue;
+    font-weight: bold;
     font-size: 30px;
     padding: 0;
 }
@@ -21,6 +22,12 @@
 .Form-textarea {
     font-size: 20px;
     resize: vertical;
+}
+
+.Form-date p {
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
 }
 
 .Buttons-panel {
@@ -53,4 +60,8 @@
 
 .Button-clear:hover {
     color: azure;
+}
+
+.react-datepicker__input-container input {
+    font-size: 20px;
 }

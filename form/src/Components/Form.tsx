@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./Form.css";
 import Select, {
   SingleValue,
@@ -10,10 +10,11 @@ import Select, {
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { setDate } from "date-fns";
 
 interface Option {
-  value: string;
-  label: string;
+  value?: string;
+  label?: string;
 }
 
 const options: Options<Option> = [
@@ -41,19 +42,32 @@ const newControlStyle = (
   backgroundColor: "#7C3626",
 });
 
-export default function Form() {
+interface FormData {
+  option1?: string;
+  option2?: string;
+  date?: Date;
+  comment: string;
+}
+
+export default function Form({ onSend }: { onSend: (data: FormData) => void }) {
   const [option, setOption] = useState<SingleValue<Option>>(null);
   const [startDate, setStartDate] = useState<Date>(new Date());
+  const [comment, setComment] = useState<string>("");
+
+  // const selectRef = useRef<Select<Option>>(null);
 
   return (
     <div className="Form">
       <p> Meeting room book</p>
-      <Select<Option>
+      <Select
+        //ref={selectRef}
+        value={option}
         defaultValue={option}
         onChange={setOption}
         options={options}
       ></Select>
-      <Select<Option>
+      <Select
+        value={option}
         defaultValue={option}
         onChange={setOption}
         options={options}
@@ -67,10 +81,36 @@ export default function Form() {
           }}
         ></DatePicker>
       </div>
-      <textarea placeholder="leave your comment here..."></textarea>
+      <textarea
+        placeholder="leave your comment here..."
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+      ></textarea>
       <div className="Buttons-panel">
-        <div className="Button Button-send">Send</div>
-        <div className="Button Button-clear">Clear</div>
+        <div
+          className="Button Button-send"
+          onClick={() =>
+            onSend({
+              option1: option?.value,
+              option2: option?.value,
+              date: startDate,
+              comment: comment,
+            })
+          }
+        >
+          Send
+        </div>
+        <div
+          className="Button Button-clear"
+          onClick={() => {
+            setOption(null);
+
+            setComment("");
+            setStartDate(new Date());
+          }}
+        >
+          Clear
+        </div>
       </div>
     </div>
   );

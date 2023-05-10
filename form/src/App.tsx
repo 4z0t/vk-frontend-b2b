@@ -7,7 +7,7 @@ export default function App() {
   return (
     <div className="App">
       <div className="App-header">
-        <Form></Form>
+        <Form onSend={(v) => console.log(v)}></Form>
       </div>
     </div>
   );

@@ -14,8 +14,9 @@ interface Option<T = string> {
 }
 
 interface FormData {
-  option1?: string;
-  option2?: string;
+  tower?: string;
+  floor?: number;
+  room?: number;
   date?: Date;
   comment: string;
 }
@@ -38,7 +39,8 @@ const rooms: Options<Option<number>> = range(1, 10).map((v) => {
 
 function TextArea(props: React.HTMLProps<HTMLTextAreaElement>) {
   return (
-    <textarea className="Form-textarea"
+    <textarea
+      className="Form-textarea"
       placeholder={localization.form.commentPlaceholder}
       {...props}
     ></textarea>
@@ -62,7 +64,7 @@ function SendButton(props: React.HTMLProps<HTMLDivElement>) {
 }
 
 function Form({ onSend }: { onSend: (data: FormData) => void }) {
-  const [option, setOption] = useState<SingleValue<Option>>(null);
+  const [tower, setTower] = useState<SingleValue<Option>>(null);
   const [floor, setFloor] = useState<SingleValue<Option<number>>>(null);
   const [room, setRoom] = useState<SingleValue<Option<number>>>(null);
   const [startDate, setStartDate] = useState<Date>(new Date());
@@ -74,9 +76,9 @@ function Form({ onSend }: { onSend: (data: FormData) => void }) {
       <p>{localization.form.formTitle}</p>
       <Select
         placeholder={localization.form.select.towerPlaceholder}
-        value={option}
-        defaultValue={option}
-        onChange={setOption}
+        value={tower}
+        defaultValue={tower}
+        onChange={setTower}
         options={towers}
       ></Select>
       <Select
@@ -106,7 +108,7 @@ function Form({ onSend }: { onSend: (data: FormData) => void }) {
         value={timeRange}
         onChange={setTimeRange}
       ></TimeRangePicker>
-      <TextArea        
+      <TextArea
         value={comment}
         onChange={(e) => setComment(e.currentTarget.value)}
       />
@@ -114,8 +116,9 @@ function Form({ onSend }: { onSend: (data: FormData) => void }) {
         <SendButton
           onClick={() =>
             onSend({
-              option1: option?.value,
-              option2: option?.value,
+              tower: tower?.value,
+              floor: floor?.value,
+              room: room?.value,
               date: startDate,
               comment: comment,
             })
@@ -123,7 +126,7 @@ function Form({ onSend }: { onSend: (data: FormData) => void }) {
         />
         <ClearButton
           onClick={() => {
-            setOption(null);
+            setTower(null);
             setFloor(null);
             setRoom(null);
             setStartDate(new Date());

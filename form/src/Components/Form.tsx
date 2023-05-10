@@ -4,6 +4,8 @@ import "./Form.css";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
+import { LooseValue } from "@wojtekmaj/react-timerange-picker/dist/cjs/shared/types";
 
 import localization from "../Localization";
 interface Option {
@@ -24,10 +26,29 @@ const options: Options<Option> = [
   { value: "vanilla", label: "Vanilla" },
 ];
 
+
+
+function ClearButton(props: React.HTMLProps<HTMLDivElement>) {
+  return (
+    <div className="Button Button-clear" {...props}>
+      {localization.form.clearText}
+    </div>
+  );
+}
+
+function SendButton(props: React.HTMLProps<HTMLDivElement>) {
+  return (
+    <div className="Button Button-send" {...props}>
+      {localization.form.sendText}
+    </div>
+  );
+}
+
 export default function Form({ onSend }: { onSend: (data: FormData) => void }) {
   const [option, setOption] = useState<SingleValue<Option>>(null);
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [comment, setComment] = useState<string>("");
+  const [timeRange, setTimeRange] = useState<LooseValue>(["00:00", "23:59"]);
 
   return (
     <div className="Form">
@@ -53,14 +74,17 @@ export default function Form({ onSend }: { onSend: (data: FormData) => void }) {
           }}
         ></DatePicker>
       </div>
+      <TimeRangePicker
+        value={timeRange}
+        onChange={setTimeRange}
+      ></TimeRangePicker>
       <textarea
         placeholder={localization.form.commentPlaceholder}
         value={comment}
         onChange={(e) => setComment(e.target.value)}
       ></textarea>
       <div className="Buttons-panel">
-        <div
-          className="Button Button-send"
+        <SendButton
           onClick={() =>
             onSend({
               option1: option?.value,
@@ -69,19 +93,14 @@ export default function Form({ onSend }: { onSend: (data: FormData) => void }) {
               comment: comment,
             })
           }
-        >
-          {localization.form.sendText}
-        </div>
-        <div
-          className="Button Button-clear"
+        />
+        <ClearButton
           onClick={() => {
             setOption(null);
             setComment("");
             setStartDate(new Date());
           }}
-        >
-          {localization.form.clearText}
-        </div>
+        />
       </div>
     </div>
   );

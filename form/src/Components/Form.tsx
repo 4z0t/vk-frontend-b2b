@@ -68,9 +68,9 @@ export default function Form() {
         ></DatePicker>
       </div>
       <textarea placeholder="leave your comment here..."></textarea>
-      <div>
-        <div>Send</div>
-        <div>Clear</div>
+      <div className="Buttons-panel">
+        <div className="Button Button-send">Send</div>
+        <div className="Button Button-clear">Clear</div>
       </div>
     </div>
   );

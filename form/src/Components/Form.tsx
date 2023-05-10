@@ -1,46 +1,15 @@
 import React, { useState, useRef } from "react";
+import Select, { SingleValue, Options } from "react-select";
 import "./Form.css";
-import Select, {
-  SingleValue,
-  Options,
-  Theme,
-  CSSObjectWithLabel,
-  ControlProps,
-} from "react-select";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { setDate } from "date-fns";
 
+import localization from "../Localization";
 interface Option {
   value?: string;
   label?: string;
 }
-
-const options: Options<Option> = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
-];
-
-const newTheme = (theme: Theme) => ({
-  ...theme,
-  borderRadius: 10,
-  colors: {
-    ...theme.colors,
-
-    primary25: "hotpink",
-    primary: "black",
-  },
-});
-
-const newControlStyle = (
-  baseStyles: CSSObjectWithLabel,
-  state: ControlProps<Option>
-): CSSObjectWithLabel => ({
-  ...baseStyles,
-  backgroundColor: "#7C3626",
-});
 
 interface FormData {
   option1?: string;
@@ -49,18 +18,21 @@ interface FormData {
   comment: string;
 }
 
+const options: Options<Option> = [
+  { value: "chocolate", label: "Chocolate" },
+  { value: "strawberry", label: "Strawberry" },
+  { value: "vanilla", label: "Vanilla" },
+];
+
 export default function Form({ onSend }: { onSend: (data: FormData) => void }) {
   const [option, setOption] = useState<SingleValue<Option>>(null);
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [comment, setComment] = useState<string>("");
 
-  // const selectRef = useRef<Select<Option>>(null);
-
   return (
     <div className="Form">
-      <p> Meeting room book</p>
+      <p>{localization.form.formTitle}</p>
       <Select
-        //ref={selectRef}
         value={option}
         defaultValue={option}
         onChange={setOption}
@@ -82,7 +54,7 @@ export default function Form({ onSend }: { onSend: (data: FormData) => void }) {
         ></DatePicker>
       </div>
       <textarea
-        placeholder="leave your comment here..."
+        placeholder={localization.form.commentPlaceholder}
         value={comment}
         onChange={(e) => setComment(e.target.value)}
       ></textarea>
@@ -98,18 +70,17 @@ export default function Form({ onSend }: { onSend: (data: FormData) => void }) {
             })
           }
         >
-          Send
+          {localization.form.sendText}
         </div>
         <div
           className="Button Button-clear"
           onClick={() => {
             setOption(null);
-
             setComment("");
             setStartDate(new Date());
           }}
         >
-          Clear
+          {localization.form.clearText}
         </div>
       </div>
     </div>

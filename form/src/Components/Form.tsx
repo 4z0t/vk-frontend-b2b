@@ -8,8 +8,8 @@ import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
 import { LooseValue } from "@wojtekmaj/react-timerange-picker/dist/cjs/shared/types";
 
 import localization from "../Localization";
-interface Option {
-  value?: string;
+interface Option<T = string> {
+  value?: T;
   label?: string;
 }
 
@@ -20,11 +20,21 @@ interface FormData {
   comment: string;
 }
 
-const options: Options<Option> = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
+const range = (start: number, end: number) =>
+  Array.from(Array(end - start + 1).keys()).map((x) => x + start);
+
+const towers: Options<Option> = [
+  { value: "A", label: "А" },
+  { value: "B", label: "Б" },
 ];
+
+const floors: Options<Option<number>> = range(3, 27).map((v) => {
+  return { value: v, label: v.toString() };
+});
+
+const rooms: Options<Option<number>> = range(1, 10).map((v) => {
+  return { value: v, label: v.toString() };
+});
 
 function TextArea(props: React.HTMLProps<HTMLTextAreaElement>) {
   return (
@@ -53,6 +63,8 @@ function SendButton(props: React.HTMLProps<HTMLDivElement>) {
 
 function Form({ onSend }: { onSend: (data: FormData) => void }) {
   const [option, setOption] = useState<SingleValue<Option>>(null);
+  const [floor, setFloor] = useState<SingleValue<Option<number>>>(null);
+  const [room, setRoom] = useState<SingleValue<Option<number>>>(null);
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [comment, setComment] = useState<string>("");
   const [timeRange, setTimeRange] = useState<LooseValue>(["00:00", "23:59"]);
@@ -65,13 +77,21 @@ function Form({ onSend }: { onSend: (data: FormData) => void }) {
         value={option}
         defaultValue={option}
         onChange={setOption}
-        options={options}
+        options={towers}
       ></Select>
       <Select
-        value={option}
-        defaultValue={option}
-        onChange={setOption}
-        options={options}
+        placeholder={localization.form.select.floorPlaceholder}
+        value={floor}
+        defaultValue={floor}
+        onChange={setFloor}
+        options={floors}
+      ></Select>
+      <Select
+        placeholder={localization.form.select.roomPlaceholder}
+        value={room}
+        defaultValue={room}
+        onChange={setRoom}
+        options={rooms}
       ></Select>
       <div>
         <DatePicker
@@ -104,8 +124,10 @@ function Form({ onSend }: { onSend: (data: FormData) => void }) {
         <ClearButton
           onClick={() => {
             setOption(null);
-            setComment("");
+            setFloor(null);
+            setRoom(null);
             setStartDate(new Date());
+            setComment("");
           }}
         />
       </div>

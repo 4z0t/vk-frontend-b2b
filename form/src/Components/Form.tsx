@@ -26,7 +26,14 @@ const options: Options<Option> = [
   { value: "vanilla", label: "Vanilla" },
 ];
 
-
+function TextArea(props: React.HTMLProps<HTMLTextAreaElement>) {
+  return (
+    <textarea
+      placeholder={localization.form.commentPlaceholder}
+      {...props}
+    ></textarea>
+  );
+}
 
 function ClearButton(props: React.HTMLProps<HTMLDivElement>) {
   return (
@@ -51,7 +58,7 @@ export default function Form({ onSend }: { onSend: (data: FormData) => void }) {
   const [timeRange, setTimeRange] = useState<LooseValue>(["00:00", "23:59"]);
 
   return (
-    <div className="Form">
+    <form className="Form">
       <p>{localization.form.formTitle}</p>
       <Select
         value={option}
@@ -78,11 +85,10 @@ export default function Form({ onSend }: { onSend: (data: FormData) => void }) {
         value={timeRange}
         onChange={setTimeRange}
       ></TimeRangePicker>
-      <textarea
-        placeholder={localization.form.commentPlaceholder}
+      <TextArea
         value={comment}
-        onChange={(e) => setComment(e.target.value)}
-      ></textarea>
+        onChange={(e) => setComment(e.currentTarget.value)}
+      />
       <div className="Buttons-panel">
         <SendButton
           onClick={() =>
@@ -102,6 +108,6 @@ export default function Form({ onSend }: { onSend: (data: FormData) => void }) {
           }}
         />
       </div>
-    </div>
+    </form>
   );
 }
